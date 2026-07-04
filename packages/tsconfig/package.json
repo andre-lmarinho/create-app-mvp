@@ -1,0 +1,11 @@
+{
+  "name": "@repo/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "files": [
+    "base.json",
+    "react-library.json",
+    "nextjs.json"
+  ]
+}

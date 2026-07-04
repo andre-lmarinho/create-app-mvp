@@ -1,0 +1,22 @@
+{
+  "name": "create-mvp",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": "./index.mjs",
+  "description": "Scaffold a production-grade Next.js monorepo with auth, tRPC, Prisma, and Tailwind — zero config",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andre-lmarinho/saas-mvp.git"
+  },
+  "homepage": "https://github.com/andre-lmarinho/saas-mvp#readme",
+  "bugs": {
+    "url": "https://github.com/andre-lmarinho/saas-mvp/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "files": [
+    "index.mjs"
+  ]
+}

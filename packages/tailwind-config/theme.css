@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@source "../../packages/**/*.{ts,tsx}";
+@source "../../apps/**/*.{ts,tsx}";
+
+:root {
+  /* Neutral slate palette — replace with your brand colors. */
+  --primary-main: #475569;
+  --ink: #1e293b;
+  --neutral-gray: #e2e8f0;
+
+  --primary-50: #f8fafc;
+  --primary-100: #f1f5f9;
+  --primary-200: #e2e8f0;
+  --primary-300: #cbd5e1;
+  --primary-400: #94a3b8;
+  --primary-500: #64748b;
+  --primary-600: #475569;
+  --primary-700: #334155;
+  --primary-800: #1e293b;
+  --primary-900: #0f172a;
+  --primary-950: #020617;
+
+  --background: 210 20% 98%; /* #f8fafc */
+  --foreground: 222 47% 11%;
+
+  --card: 0 0% 100%; /* #FFFFFF */
+  --muted-foreground: 215.4 16.3% 46.9%;
+
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --error-strong: #dc2626;
+}
+
+@theme inline {
+  --color-primary-50: var(--primary-50);
+  --color-primary-100: var(--primary-100);
+  --color-primary-200: var(--primary-200);
+  --color-primary-300: var(--primary-300);
+  --color-primary-400: var(--primary-400);
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+  --color-primary-700: var(--primary-700);
+  --color-primary-800: var(--primary-800);
+  --color-primary-900: var(--primary-900);
+  --color-primary-950: var(--primary-950);
+  --color-primary-main: var(--primary-main);
+  --color-neutral-gray: var(--neutral-gray);
+  --color-ink: var(--ink);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-error-bg: var(--error-bg);
+  --color-error-border: var(--error-border);
+  --color-error-strong: var(--error-strong);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: "Inter", sans-serif;
+}

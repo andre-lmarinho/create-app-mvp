@@ -1,0 +1,28 @@
+{
+  "name": "@repo/database",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "prisma generate --config prisma.config.ts",
+    "db:generate": "prisma generate --config prisma.config.ts",
+    "db:migrate": "prisma migrate dev --config prisma.config.ts",
+    "db:studio": "prisma studio --config prisma.config.ts",
+    "typecheck": "prisma generate --config prisma.config.ts && tsc --pretty --noEmit"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "7.8.0",
+    "@prisma/client": "7.8.0"
+  },
+  "peerDependencies": {
+    "next": "16.2.9"
+  },
+  "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
+    "@types/pg": "8.20.0",
+    "dotenv": "16.5.0",
+    "next": "16.2.9",
+    "prisma": "7.8.0",
+    "tsx": "4.22.4"
+  }
+}

@@ -1,0 +1,22 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Security: only these packages may run install/build scripts
+allowBuilds:
+  "@prisma/engines": true
+  esbuild: true
+  prisma: true
+  sharp: true
+
+# Minimum 7 days since publish before any dep can be resolved
+minimumReleaseAge: 10080
+minimumReleaseAgeStrict: true
+
+# Block exotic subdep sources (git/URL) — on by default in pnpm 11
+
+# Save exact versions (no ^/~ ranges)
+saveExact: true
+
+# Always generate lockfile
+lockfile: true

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
+
+  "root": true,
+  "css": {
+    "parser": {
+      "tailwindDirectives": true,
+      "cssModules": true
+    }
+  },
+  "formatter": {
+    "includes": ["**/*"],
+    "lineWidth": 110,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf"
+  },
+  "files": {
+    "includes": [
+      "apps/**/*",
+      "packages/**/*",
+      "scripts/**/*",
+      "*.json",
+      "*.jsonc",
+      "*.js",
+      "*.mjs",
+      "*.cjs",
+      "*.ts",
+      "*.tsx",
+      "*.css",
+      ".*rc",
+      "!!**/node_modules",
+      "!!**/dist",
+      "!!**/docs",
+      "!!**/.next",
+      "!!**/coverage",
+      "!!**/test-results",
+      "!!package-lock.json"
+    ],
+    "ignoreUnknown": true
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": true,
+      "quoteStyle": "double",
+      "jsxQuoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "es5"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "react": "recommended"
+    },
+    "rules": {
+      "recommended": true
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.tsx"],
+      "javascript": {
+        "jsxRuntime": "transparent"
+      }
+    },
+    {
+      "includes": ["**/*.test.{ts,tsx,js,jsx,mts,mjs,cjs,cts}"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off",
+            "noThenProperty": "off"
+          },
+          "performance": {
+            "noImgElement": "off"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "skills": {
+    "improve-codebase-architecture": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/improve-codebase-architecture/SKILL.md",
+      "computedHash": "9e9b617b1c70d390e37dbfd1c031c11b3de850e2e3d01c4a2c2888bdb386a247"
+    },
+    "react-best-practices": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "computedHash": "50b55178a2da8ee931850193596601fa0517cd800e171366a903769f25bf4dda"
+    },
+    "turborepo": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/turborepo/SKILL.md",
+      "computedHash": "c092ba49bebee00ed00041a92457073ba4c13b9ec459bc3a828f01b6280238a7"
+    },
+    "ui-ux-pro-max": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "9bd26c52dfd10dfd613dd3cc85df217dc25a172e380bde41fdfa6fedda288b2a"
+    },
+    "web-design-guidelines": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "fc48547ce7b3f384043d0804d823a0c6bd02f4a94a484bc724551d28fcd6b90d"
+    },
+    "ponytail": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/ponytail/SKILL.md",
+      "computedHash": "1b9eaae4b639a2a6c311ad88a83e2bb0b38a612c17c84e8ac0b7603ec325604e"
+    },
+    "ponytail-audit": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/ponytail-audit/SKILL.md",
+      "computedHash": "c0f03b6e1d95809f74e989f4bc51a6959ce98696aef0e334f0c5c332f9504bd5"
+    },
+    "ponytail-debt": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/ponytail-debt/SKILL.md",
+      "computedHash": "20ae0cce818c989f0bc6f10e84ef87962d136d29c5930ebc5b3498df71e1f0c3"
+    },
+    "ponytail-help": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/ponytail-help/SKILL.md",
+      "computedHash": "61ec008731e4788e34000c95e76bc324254849df54dd8fff63ece57dd7c4442b"
+    },
+    "ponytail-review": {
+      "source": ".agents/skills",
+      "sourceType": "local",
+      "skillPath": "skills/ponytail-review/SKILL.md",
+      "computedHash": "f77338e574a8ca0a7f7a8964322c39a88bc16536e13c707b7fd57ec50848f36a"
+    }
+  }
+}

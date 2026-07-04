@@ -1,0 +1,51 @@
+{
+  "name": "repo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "dev": "pnpm run db:generate && turbo run dev --filter=./apps/*",
+    "dev:web": "pnpm run db:generate && turbo run dev --filter=@repo/web",
+    "dev:landing": "turbo run dev --filter=@repo/landing",
+    "build": "turbo run build --filter=./apps/*",
+    "build:web": "turbo run build --filter=@repo/web",
+    "build:landing": "turbo run build --filter=@repo/landing",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "turbo run typecheck",
+    "test": "pnpm run db:generate && vitest run --project unit",
+    "db:generate": "pnpm --filter @repo/database run db:generate",
+    "db:migrate": "pnpm --filter @repo/database run db:migrate",
+    "db:studio": "pnpm --filter @repo/database run db:studio",
+    "security:package": "node scripts/check-package-security.mjs",
+    "build:icons": "node packages/ui/scripts/build-icons.mjs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.16",
+    "@tailwindcss/postcss": "4.3.1",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "25.9.2",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "husky": "9.1.7",
+    "jsdom": "29.1.1",
+    "lint-staged": "17.0.7",
+    "tailwindcss": "4.3.0",
+    "turbo": "2.9.16",
+    "typescript": "6.0.3",
+    "vitest": "4.1.8"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,scss,md,html,mjs,cjs,cts,mts}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  }
+}

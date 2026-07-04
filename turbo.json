@@ -1,0 +1,59 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "futureFlags": {
+    "globalConfiguration": true
+  },
+  "global": {
+    "inputs": ["pnpm-lock.yaml"],
+    "ui": "stream",
+    "remoteCache": {
+      "enabled": true
+    }
+  },
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "!.next/dev/**"]
+    },
+    "@repo/web#build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": [
+        "BETTER_AUTH_SECRET",
+        "BETTER_AUTH_URL",
+        "CI",
+        "DATABASE_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_WWW_URL",
+        "NODE_ENV",
+        "NODE_OPTIONS"
+      ],
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"]
+    },
+    "@repo/landing#build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": ["CI", "NEXT_PUBLIC_APP_URL", "NEXT_PUBLIC_WWW_URL", "NODE_ENV", "NODE_OPTIONS"],
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/tsconfig/*.json"],
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "env": [
+        "BETTER_AUTH_SECRET",
+        "BETTER_AUTH_URL",
+        "CI",
+        "DATABASE_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_WWW_URL",
+        "NODE_ENV",
+        "NODE_OPTIONS"
+      ]
+    }
+  }
+}
