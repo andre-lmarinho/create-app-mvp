@@ -116,10 +116,6 @@ first-class contributors — the conventions are machine-readable, not just pros
   section ([`_sections.md`](.agents/rules/_sections.md)): architecture, quality, data,
   api, performance, testing, patterns, culture, ci, reference. Each is a focused,
   linkable standard an agent (or human) can cite in review.
-- **[.agents/skills/](.agents/skills/)** — 10 bundled skills (the `ponytail`
-  over-engineering hunters, `improve-codebase-architecture`, `react-best-practices`,
-  `turborepo`, `ui-ux-pro-max`, `web-design-guidelines`), pinned in
-  [`skills-lock.json`](skills-lock.json) and loadable via `npx @tanstack/intent`.
 - **[docs/decisions.md](docs/decisions.md)** — 35 ADRs recording *why* each choice was
   made, so an agent extends the system instead of second-guessing it.
 - **[.agents/commands.md](.agents/commands.md)** + **[specs/](specs/)** — a verified
@@ -156,6 +152,37 @@ ones it doesn't.
 - **Styling** — Tailwind CSS 4
 - **Testing** — Vitest (unit)
 - **Quality** — Biome (lint + format)
+
+## How it compares
+
+This is an **infrastructure bootstrap, not a finished SaaS**: it wires up the generic
+base — the stack, the two apps, CI, the guardrails — and leaves the product domain to
+you. That puts it in a different category from boilerplates that ship billing, teams, and
+an admin out of the box. Each solves a different problem; the right pick depends on what
+you're building.
+
+| Project | Category | Monorepo | Best for |
+| --- | --- | --- | --- |
+| [create-t3-app](https://github.com/t3-oss/create-t3-app) | Modular typesafe CLI | ❌ | Spinning up a typesafe Next.js app fast |
+| [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo) | T3 in a monorepo | ✅ | Web + mobile (Expo) sharing one API |
+| [nextjs/saas-starter](https://github.com/nextjs/saas-starter) | Reference SaaS | ❌ | Seeing a Stripe SaaS running today |
+| [next-forge](https://github.com/vercel/next-forge) | Full Turborepo SaaS | ✅ | Many integrations wired from day one |
+| **this repo** | Neutral infra base | ✅ | A clean, isolated base to build on |
+
+Where it tends to help, when the base matters more than the feature inventory:
+
+- **Two isolated apps** — `landing` ships no backend, no secrets, no `@repo/database`.
+- **Supply-chain hardening** — pinned versions, an install-script allowlist, and a block
+  on freshly published releases, all checked as the first CI job.
+- **Recorded decisions** — the ADRs in [docs/decisions.md](docs/decisions.md) and the
+  engineering rules in [.agents/rules/](.agents/rules/), written with agent-assisted
+  development in mind.
+- **Current stack** — Next 16, TypeScript 6, Prisma 7, tRPC 11, Biome.
+
+The flip side of that neutrality: what's left out is a product decision, not a hidden gap
+— billing, email, OAuth, i18n, multi-tenancy, and the like are catalogued in
+[docs/production-readiness.md](docs/production-readiness.md). And being new and lean, it
+doesn't have the community or track record of something like create-t3-app.
 
 ## Quick start
 
@@ -223,7 +250,7 @@ packages/
   ui/              UI primitives, form kit, icon sprite, class-merge utility
   tailwind-config/ Shared Tailwind theme
   tsconfig/        Shared TypeScript config
-.agents/           Machine-readable rules, skills, and command reference
+.agents/           Machine-readable rules and command reference
 docs/              Stable architecture documentation and ADRs
 specs/             Opt-in spec-driven workflow
 scripts/           Operational scripts (dependency security check, …)
