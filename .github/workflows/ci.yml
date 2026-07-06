@@ -89,6 +89,13 @@ jobs:
             turbo-${{ runner.os }}-
       - run: pnpm install --frozen-lockfile
       - name: Build apps
+        env:
+          # Build only imports the DB module; a syntactically valid URL satisfies
+          # the load-time guard in prisma.ts without connecting to a database.
+          DATABASE_URL: postgresql://user:password@localhost:5432/app
+          # Let Turbo resolve the affected range against the PR base in CI, where
+          # the base ref isn't checked out locally.
+          TURBO_SCM_BASE: ${{ github.event.pull_request.base.sha }}
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             npx turbo run build --filter=./apps/* --affected
