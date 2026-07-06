@@ -6,7 +6,7 @@
 [![React](https://img.shields.io/badge/React-19-087EA4?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io)
-[![npm](https://img.shields.io/npm/v/create-mvp?label=CLI&color=blue)](https://www.npmjs.com/package/create-mvp)
+[![npm](https://img.shields.io/npm/v/@andre.marinho/create-mvp?label=CLI&color=blue)](https://www.npmjs.com/package/@andre.marinho/create-mvp)
 [![Better Auth](https://img.shields.io/badge/Better_Auth-1-111111)](https://www.better-auth.com)
 [![tRPC](https://img.shields.io/badge/tRPC-11-2596BE?logo=trpc&logoColor=white)](https://trpc.io)
 
@@ -160,7 +160,7 @@ ones it doesn't.
 ## Quick start
 
 ```bash
-npx create-mvp my-project
+npx @andre.marinho/create-mvp my-project
 cd my-project
 cp apps/web/.env.example apps/web/.env.local
 cp apps/landing/.env.example apps/landing/.env.local
@@ -195,23 +195,23 @@ pnpm run dev
 
 ## Commands
 
-| Command                          | What it does                          |
-| -------------------------------- | ------------------------------------- |
-| `npx create-mvp <name>`          | Scaffolds a fresh copy in `<name>/`   |
-| `pnpm run dev`                   | Starts `web` (:3000) and `landing` (:3001) |
-| `pnpm run build`        | Production build of both apps         |
-| `pnpm run typecheck`    | Type checking (`tsc --noEmit`)        |
-| `pnpm run lint`         | Lint with Biome                       |
-| `pnpm run lint:fix`     | Lint + format with auto-fix           |
-| `pnpm run test`         | Unit tests (Vitest)                   |
-| `pnpm run db:generate`  | Generates the Prisma Client           |
-| `pnpm run db:migrate`   | Applies/creates Prisma migrations     |
-| `pnpm run db:studio`    | Opens Prisma Studio                   |
+| Command                                | What it does                                |
+| -------------------------------------- | ------------------------------------------- |
+| `npx @andre.marinho/create-mvp <name>` | Scaffolds a fresh copy in `<name>/`         |
+| `pnpm run dev`                         | Starts `web` (:3000) and `landing` (:3001) |
+| `pnpm run build`                       | Production build of both apps               |
+| `pnpm run typecheck`                   | Type checking (`tsc --noEmit`)              |
+| `pnpm run lint`                        | Lint with Biome                             |
+| `pnpm run lint:fix`                    | Lint + format with auto-fix                 |
+| `pnpm run test`                        | Unit tests (Vitest)                         |
+| `pnpm run db:generate`                 | Generates the Prisma Client                 |
+| `pnpm run db:migrate`                  | Applies/creates Prisma migrations           |
+| `pnpm run db:studio`                   | Opens Prisma Studio                         |
 
 ## Structure
 
 ```text
-create-mvp/        Scaffolding CLI (`npx create-mvp`)
+create-mvp/        Scaffolding CLI (`npx @andre.marinho/create-mvp`)
 apps/
   web/             Authenticated app: auth pages, tRPC API, auth status
   landing/         Marketing site + legal pages
