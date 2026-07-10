@@ -27,12 +27,12 @@ async function getUser(id: string) {
 ```typescript
 // In UsersRepository.ts — Prisma is contained here
 import type { PrismaClient } from "@repo/database/generated/prisma/client";
-import type { UserDto } from "@repo/features/auth/types";
+import type { PublicUser } from "@repo/features/auth/types";
 
 export class UsersRepository {
   constructor(private readonly db: PrismaClient) {}
 
-  async findById(id: string): Promise<UserDto | null> {
+  async findById(id: string): Promise<PublicUser | null> {
     return this.db.user.findFirst({
       where: { id },
       select: { id: true, name: true, email: true, emailVerified: true, image: true },

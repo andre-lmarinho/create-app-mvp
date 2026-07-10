@@ -7,38 +7,30 @@ Copy this directory, rename `YourDomain` to your domain, and fill in the impleme
 
 ```
 packages/features/<domain>/
-├── types.ts                              # DTOs — what crosses boundaries
+├── types.ts                              # The shapes the slice exposes + private inputs
 ├── repositories/<Name>Repository.ts      # Data access — Prisma isolated here
 └── services/<Name>Service.ts             # Business logic — uses repo, throws ApplicationError
 ```
 
 ## Layer Responsibilities
 
-### `types.ts` — DTOs (Data Transfer Objects)
+### `types.ts` — the slice's shapes
 
-Define explicit interfaces for every shape of data that crosses a boundary.
-Never expose raw Prisma types to the rest of the application.
-
-Naming convention:
-| Pattern | Example | Use |
-|---------|---------|-----|
-| `{Entity}Dto` | `UserDto` | Base shape |
-| `{Entity}With{Relation}Dto` | `UserWithSessionsDto` | With eagerly loaded relations |
-| `{Entity}For{Purpose}Dto` | `UserForProfileDto` | Specific projection for a view |
-| `Create{Entity}Dto` | `CreateUserDto` | Input shape for creation |
-
-Use string literal unions instead of Prisma enums for status/type fields.
+The shapes the slice exposes to consumers, plus inputs that stay inside the slice (e.g.
+repository query filters). Expose only the fields consumers need — never a raw Prisma row.
+How your project organizes shared shapes beyond a single slice is your call — this
+template takes no position.
 
 ### `repositories/<Name>Repository.ts` — Data Access
 
 Responsibilities (ONLY these):
 - Write the `select` inline on each query — favor readability over shared `*_SELECT` constants
-- Map Prisma results to DTOs
+- Return the slice's exposed types, never raw Prisma rows
 - Accept `PrismaClient` via constructor injection
 
 Rules:
 - NO business logic, NO validation, NO orchestration
-- Methods return DTOs or `null` (never throw `ApplicationError`)
+- Methods return the slice's types or `null` (never throw `ApplicationError`)
 - Use explicit `select` clauses, never broad `include`
 - Throw only technical errors (e.g. DB connection failure), wrap with context
 
@@ -58,8 +50,8 @@ Rules:
 
 1. **Copy** `packages/features/_template/` → `packages/features/<domain>/`
 2. **Replace** `YourDomain` with your domain name in every file and symbol
-3. **Define DTOs** in `types.ts` — only fields the consumer needs
-4. **Wire the repository** — define `select` constants, inject `PrismaClient`, return DTOs
+3. **Define the slice's types** in `types.ts` — only fields the consumer needs
+4. **Wire the repository** — write the `select` inline, inject `PrismaClient`
 5. **Wire the service** — inject the repository, add business rules, throw `ApplicationError`
 6. **Expose via tRPC** — create schema + handler + router in `packages/trpc/server/routers/`
 7. **Create the view** — add a client component in `apps/web/views/<domain>/`
@@ -70,6 +62,6 @@ Rules:
 - `packages/features/**` must NOT import `@repo/trpc` or `@trpc/server`
 - Repositories never hold business logic (see `data-repository-pattern.md`)
 - Services throw `ApplicationError`, not `TRPCError` (see `quality-error-handling.md`)
-- DTOs are explicit interfaces, never raw Prisma types (see `data-dto-boundaries.md`)
+- Never expose raw Prisma rows or generated types to consumers
 - Use `import type { X }` for type-only imports
 - Always use explicit Prisma `select` for performance and security
