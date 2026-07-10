@@ -18,7 +18,7 @@ The section ID (in parentheses) is the filename prefix used to group rules.
 ## 3. Data Layer (data)
 
 **Impact:** HIGH
-**Description:** Repository patterns, DTOs, and technology isolation to prevent coupling and enable maintainability.
+**Description:** Repository patterns and technology isolation to prevent coupling and enable maintainability.
 
 ## 4. API Design (api)
 

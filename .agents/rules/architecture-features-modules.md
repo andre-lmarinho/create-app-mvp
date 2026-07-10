@@ -32,7 +32,7 @@ packages/features/auth/
 ├── server/                     # Server actions / logic — OK here
 ├── hooks/useAuth.ts            # tRPC-free hook — OK here
 ├── context/                    # tRPC-free provider — OK here
-└── types.ts                    # Types/DTOs — OK here
+└── types.ts                    # Types — OK here
 
 apps/web/modules/auth/
 └── LoginView.tsx               # Consumes app hooks/actions — MUST be in the app

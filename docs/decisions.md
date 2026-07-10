@@ -36,7 +36,7 @@ no implementation yet, it is flagged as such.
 | ADR-014 | Baseline schema limited to Better Auth tables |
 | ADR-015 | Better Auth as the identity system |
 | ADR-016 | Auth as the first vertical slice |
-| ADR-017 | Repository + DTO conventions deferred; `select` over `include` |
+| ADR-017 | Prisma isolated behind repositories; `select` over `include`; shape conventions left open |
 | **API Layer (tRPC)** ||
 | ADR-018 | tRPC as the typed API boundary (superjson, `public`/`viewer`) |
 | ADR-019 | Per-request context from the Better Auth session |
@@ -489,28 +489,32 @@ live in `apps/web/views/*`. Apps consume the slice through direct public exports
 - A feature spans two locations, split by *framework coupling*; `packages/ui` stays free of
   domain rules. The auth slice is the template for new domains.
 
-## ADR-017: Repository + DTO conventions deferred; `select` over `include`
+## ADR-017: Prisma isolated behind repositories; `select` over `include`; shape conventions left open
 
 ### Context
 
-Product data access should be isolated behind repositories returning DTOs, but the
-baseline has no domain models beyond auth — building repositories now would be speculative.
+Prisma must not leak past the data layer: generated types spread across handlers and React
+couple the product to the ORM, and that coupling is expensive to retrofit away. A stricter
+question — whether the template should also mandate a DTO convention (naming, a shared shape
+layer, Zod schemas at boundaries) — was considered and deliberately rejected: every
+convention the template forces narrows which projects it serves, and rules in
+`.agents/rules/` are actively enforced by AI agents, which makes a wrong default costly to
+walk back.
 
 ### Decision
 
-Document the data patterns as rules and apply them when the first product models land:
-Prisma stays isolated in repositories/low-level data access; repositories hold no business
-logic and return DTOs (never raw Prisma rows); queries prefer explicit `select` over
-`include`. **No product repositories exist yet** — the only Prisma use outside
-`packages/database` is the Better Auth adapter injection, and the `viewer` router is empty
-(ADR-018).
+Prisma is confined to repositories and low-level data access. Repositories hold no business
+logic, use explicit `select` over `include`, and return explicit typed shapes — never raw
+Prisma rows. How those shapes are named, whether they form a DTO layer, whether Prisma's
+generated enum types may reach consumers, and where shared shapes live is **left
+undefined** — each project defines its own convention if and when it needs one.
 
 ### Consequences
 
-- The absence of repositories today is intentional (YAGNI until a second domain).
-- The first real slice must materialize repositories, services, DTOs, and procedures
-  following these rules; new product queries must not spread `prisma.*` across tRPC or
-  React, and DTOs must prevent leaking sensitive fields.
+- The `_template` slice types its returns in its own `types.ts` with plain names; the
+  template ships no DTO rule and no shared shape package.
+- Teams that want a DTO convention (e.g. a shared `lib/dto` layer) add it per project.
+- No product models exist beyond auth today.
 
 ---
 

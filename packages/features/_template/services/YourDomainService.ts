@@ -1,13 +1,13 @@
 import { ApplicationError } from "@repo/lib/errors";
 import type { YourDomainRepository } from "../repositories/YourDomainRepository";
-import type { CreateYourDomainDto, YourDomainDto } from "../types";
+import type { CreateYourDomainInput, YourDomain } from "../types";
 
 export class YourDomainService {
   constructor(private readonly repo: YourDomainRepository) {}
 
   // Canonical pattern: repo returns null, the service turns it into an ApplicationError
   // that errorConversionMiddleware maps to a TRPCError.
-  async findById(id: string): Promise<YourDomainDto> {
+  async findById(id: string): Promise<YourDomain> {
     const entity = await this.repo.findById(id);
 
     if (!entity) {
@@ -17,7 +17,7 @@ export class YourDomainService {
     return entity;
   }
 
-  async create(data: CreateYourDomainDto): Promise<YourDomainDto> {
+  async create(data: CreateYourDomainInput): Promise<YourDomain> {
     if (data.name.trim().length < 2) {
       throw new ApplicationError("BAD_REQUEST", "Name must be at least 2 characters");
     }

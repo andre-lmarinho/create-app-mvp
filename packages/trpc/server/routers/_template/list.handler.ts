@@ -14,5 +14,5 @@ type ListHandlerOpts = {
 // See api-thin-controllers.md.
 export async function listHandler({ ctx: _ctx, input }: ListHandlerOpts) {
   const repo = new YourDomainRepository(prisma);
-  return repo.fetchAll(input.limit);
+  return repo.fetchAll({ limit: input.limit });
 }

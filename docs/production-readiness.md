@@ -7,7 +7,7 @@ lists the cross-cutting things an adopter must consciously handle before taking 
 template to production as a real product.
 
 **What this is *not*.** This is not a list of unbuilt features. Empty `public` / `viewer`
-routers, the absence of product repositories, services, DTOs, and domain models, and having
+routers, the absence of product repositories, services, and domain models, and having
 no business logic yet are the expected starting point — you fill those with your product.
 Product-direction choices are also out of scope: the UI ships in English because a bootstrap
 has to pick one language, not because English is "correct"; localization, branding voice, and

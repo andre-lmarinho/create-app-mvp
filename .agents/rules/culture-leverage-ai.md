@@ -12,7 +12,7 @@ tags: culture, ai, automation, testing
 Generate the bulk of boilerplate and non-critical code with AI so human attention goes to complex business logic and critical architecture. In a bootstrap MVP this is how you move fast without cutting corners on the parts that matter.
 
 **Where AI excels:**
-- Boilerplate (DTOs, basic repository CRUD, Zod schemas)
+- Boilerplate (basic repository CRUD, Zod schemas)
 - Comprehensive test suites
 - Documentation
 - Repetitive refactoring

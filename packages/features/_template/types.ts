@@ -1,12 +1,9 @@
-// DTO naming convention (see data-dto-boundaries.md):
-//   {Entity}Dto              — Base DTO
-//   {Entity}With{Relation}Dto — DTO with eager-loaded relations
-//   Create{Entity}Dto         — Input DTO for creation
+// The shapes this slice exposes to its consumers, plus slice-private inputs.
 //
-// Use string literal unions (not Prisma enums) for status/type fields.
-// Never re-export Prisma-generated types to consumers.
+// Expose only the fields consumers need — never a raw Prisma row (see
+// data-repository-pattern.md).
 
-export interface YourDomainDto {
+export interface YourDomain {
   id: string;
   name: string;
   status: "active" | "inactive";
@@ -14,11 +11,17 @@ export interface YourDomainDto {
   updatedAt: Date;
 }
 
-export interface YourDomainWithChildrenDto extends YourDomainDto {
+export interface YourDomainWithChildren extends YourDomain {
   children: Array<{ id: string; name: string }>;
 }
 
-export interface CreateYourDomainDto {
+export interface CreateYourDomainInput {
   name: string;
   status?: "active" | "inactive";
+}
+
+// Repository query input — stays inside the slice.
+export interface YourDomainListFilter {
+  status?: "active" | "inactive";
+  limit?: number;
 }
