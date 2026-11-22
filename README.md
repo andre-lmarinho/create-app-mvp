@@ -12,32 +12,49 @@
 
 </div>
 
----
+# Create App MVP
 
-> **Start here → [docs/decisions.md](docs/decisions.md)**
->
-> This is a neutral bootstrap, not a product. Before adopting it as your baseline,
-> read the decisions record: it explains **why** Prisma, Better Auth, and tRPC form
-> the default stack, and where the line sits between reusable infrastructure and
-> product-specific domain code. Understanding those trade-offs is the first step to
-> building on top of this template with confidence.
+Create App MVP scaffolds a SaaS monorepo with a web app, a public site, starter
+authentication, shared packages, and engineering checks. It provides reusable
+infrastructure, not a production-ready product.
 
----
+## Quick start
 
-## About
+**Requirements:** Node.js `>=22`, pnpm `>=10`, and a reachable PostgreSQL database
+for the authentication flow.
 
-An infrastructure bootstrap for SaaS MVPs: a Turborepo monorepo with two Next.js
-apps, an end-to-end type-safe tRPC API, Prisma for the database, and Better Auth for
-identity — wired together, tested, and hardened, so you start from a working skeleton
-instead of a blank folder. It ships an authentication slice and the minimal Better
-Auth tables; domain models, product features, and integrations are added per project.
+```bash
+npx @andre.marinho/create-mvp my-project
+cd my-project
+cp apps/web/.env.example apps/web/.env.local
+cp apps/landing/.env.example apps/landing/.env.local
+```
 
-The whole point is the seam it draws: everything **generic** is done for you (the
-stack combo, the two-app split, the UI kit, the CI, the AI guardrails), and
-everything **product-specific** is left deliberately empty for you to fill. Read
-[docs/decisions.md](docs/decisions.md) for the *why* and
-[docs/production-readiness.md](docs/production-readiness.md) for what's still yours to
-decide before shipping.
+The CLI copies the template and runs `pnpm install`. The generated project contains
+`apps/web`, `apps/landing`, `packages/`, `.agents/`, `docs/`, and `specs/`. The CLI
+removes its own `create-mvp/` installer directory from that copy.
+
+Before running the database migration, export the same `DATABASE_URL` in your shell
+that you will put in `apps/web/.env.local`. Prisma does not read that file.
+
+Set these variables:
+
+- `apps/web/.env.local`: `DATABASE_URL`, `BETTER_AUTH_SECRET`, and
+  `BETTER_AUTH_URL`.
+- `apps/web/.env.local` and `apps/landing/.env.local`: `NEXT_PUBLIC_APP_URL` and
+  `NEXT_PUBLIC_WWW_URL`. Replace the example URLs with the URLs for your
+  environment. For local development, blank values use `http://localhost:3000`
+  and `http://localhost:3001`.
+
+```bash
+pnpm run db:migrate
+pnpm run dev
+```
+
+The web app starts on port `3000`. The landing app starts on port `3001`. The
+scaffold includes a minimal authentication flow and placeholder legal pages.
+Add your product domain and integrations, then review
+[production readiness](docs/production-readiness.md) before launch.
 
 ## What's included
 
@@ -142,17 +159,6 @@ OAuth providers, multi-tenancy, billing, file storage, rate limiting, error
 tracking/APM, i18n, and background jobs. Add the ones your product needs; skip the
 ones it doesn't.
 
-## Stack
-
-- **Framework** — Next.js 16 (App Router) + React 19
-- **Language** — TypeScript
-- **API** — tRPC 11 (end-to-end type-safe)
-- **Database** — PostgreSQL with Prisma 7
-- **Auth** — Better Auth
-- **Styling** — Tailwind CSS 4
-- **Testing** — Vitest (unit)
-- **Quality** — Biome (lint + format)
-
 ## How it compares
 
 This is an **infrastructure bootstrap, not a finished SaaS**: it wires up the generic
@@ -184,42 +190,6 @@ The flip side of that neutrality: what's left out is a product decision, not a h
 [docs/production-readiness.md](docs/production-readiness.md). And being new and lean, it
 doesn't have the community or track record of something like create-t3-app.
 
-## Quick start
-
-```bash
-npx @andre.marinho/create-mvp my-project
-cd my-project
-cp apps/web/.env.example apps/web/.env.local
-cp apps/landing/.env.example apps/landing/.env.local
-pnpm run dev
-```
-
-This scaffolds the full monorepo — two apps, six shared packages, CI/CD, AI infrastructure — and installs dependencies. No history, no configuration prompts. Point it at a Postgres instance, set your secrets, and start building.
-
-## Getting started
-
-**Prerequisites:** Node.js `>=22` (the `.nvmrc` pins `24.11.0`) and pnpm `>=10`.
-
-```bash
-# 1. Install dependencies
-pnpm install
-
-# 2. Configure the environment — each app has its own example
-cp apps/web/.env.example apps/web/.env.local
-cp apps/landing/.env.example apps/landing/.env.local
-
-# 3. Start both apps (web on :3000, landing on :3001)
-pnpm run dev
-
-# (Optional) Set up git hooks for lint-staged
-# pnpm exec husky init
-```
-
-> Each app reads the `.env.local` from its own directory. The `web` app needs
-> `DATABASE_URL`, `BETTER_AUTH_SECRET`, and `BETTER_AUTH_URL`; both apps share
-> `NEXT_PUBLIC_APP_URL` and `NEXT_PUBLIC_WWW_URL` for the links between them. You
-> need a reachable Postgres instance for the auth flow.
-
 ## Commands
 
 | Command                                | What it does                                |
@@ -237,23 +207,24 @@ pnpm run dev
 
 ## Structure
 
+The CLI removes its installer directory from the generated project.
+
 ```text
-create-mvp/        Scaffolding CLI (`npx @andre.marinho/create-mvp`)
 apps/
   web/             Authenticated app: auth pages, tRPC API, auth status
   landing/         Marketing site + legal pages
 packages/
-  features/        Framework-agnostic domains (baseline: auth)
-  trpc/            Routers, procedures, server context + React tRPC client
-  database/        Prisma schema, migrations, and client singleton
-  lib/             Cross-cutting utilities (ApplicationError, URL helpers)
-  ui/              UI primitives, form kit, icon sprite, class-merge utility
+  features/        Domains, starting with auth
+  trpc/            Routers and procedures
+  database/        Prisma schema and migrations
+  lib/             Cross-cutting utilities
+  ui/              UI primitives and form kit
   tailwind-config/ Shared Tailwind theme
   tsconfig/        Shared TypeScript config
 .agents/           Machine-readable rules and command reference
-docs/              Stable architecture documentation and ADRs
+docs/              Architecture documentation and ADRs
 specs/             Opt-in spec-driven workflow
-scripts/           Operational scripts (dependency security check, …)
+scripts/           Operational scripts
 ```
 
 Responsibility boundaries: `apps/*/app` stays thin (routes, layouts, providers,
